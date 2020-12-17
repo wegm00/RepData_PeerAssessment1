@@ -39,7 +39,7 @@ activity$fullsteps <- ifelse(is.na(activity$steps),
 
 activityfull <- data.frame(steps=activity$fullsteps, interval=activity$interval, date=activity$date)
 
-stepsdailyfull <- aggregate(steps~date,activity,sum, na.rm=TRUE)
+stepsdailyfull <- aggregate(steps~date,activityfull,sum, na.rm=TRUE)
 hist(stepsdailyfull$steps, main = "Total number of steps taken per day",
      xlab = "Total steps taken per day", col = "blue")
 
@@ -57,9 +57,6 @@ activityfull$datetype <- sapply(activityfull$date, function(x) {
 
 stepsintervalfull <- aggregate(steps~interval+datetype,data=activityfull,FUN=mean)
 
-library(lattice)
-xyplot(steps ~ interval | datetype, activityfull, type = "l", layout = c(1, 2), 
-       xlab = "Interval", ylab = "Number of steps")
 
 g <-  ggplot(stepsintervalfull, aes(x = interval , y = steps, color = datetype)) +
   geom_line() +
